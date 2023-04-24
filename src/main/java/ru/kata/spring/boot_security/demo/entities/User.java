@@ -6,7 +6,9 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "Users")
@@ -40,15 +42,18 @@ public class User {
     private String email;
 
 
+    //todo переделать на OneToMany
+
+
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
                             CascadeType.REFRESH, CascadeType.DETACH}
                             , fetch = FetchType.LAZY)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
                 inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roles;
+    private Set<Role> roles;
 
     public void addRole(Role role) {
-        if (roles == null) roles = new ArrayList<>();
+        if (roles == null) roles = new HashSet<>();
         roles.add(role);
     }
 
@@ -101,7 +106,7 @@ public class User {
     }
 
 
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 

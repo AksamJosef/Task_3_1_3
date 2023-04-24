@@ -4,19 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import ru.kata.spring.boot_security.demo.dao.UserDao;
 import ru.kata.spring.boot_security.demo.entities.User;
+import ru.kata.spring.boot_security.demo.repositories.UsersRepository;
 
 
 @Component
 public class UserValidator implements Validator {
 
-    private final UserDao userDao;
+    private final UsersRepository usersRepository;
 
 
     @Autowired
-    public UserValidator(UserDao userDao) {
-        this.userDao = userDao;
+    public UserValidator(UsersRepository usersRepository) {
+        this.usersRepository = usersRepository;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class UserValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         User user = (User) target;
-        User userInDB = userDao.findByUsername(user.getUsername());
+        User userInDB = usersRepository.findByUsername(user.getUsername()).orElse(null);
 
         if((userInDB != null)
                 && (user.getId() != userInDB.getId())) {
