@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>USER INFO</title>
+</head>
+<body>
+<h2>User Info</h2>
+<br><br><br>
+
+<div>
+  <table>
+    <thead>
+    <tr>
+      <th> <b>ID</b> </th>
+      <th> <b>Name</b> </th>
+      <th> <b>Last Name</b> </th>
+      <th> <b>Email</b> </th>
+      <th> <b>Username</b> </th>
+      <th> <b>Password</b> </th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:object="${user}">
+      <td> <span th:text="${user.getId()}"/> </td>
+      <td> <span th:text="${user.getName()}"/> </td>
+      <td> <span th:text="${user.getLastName()}"/> </td>
+      <td> <span th:text="${user.getEmail()}"/> </td>
+      <td> <span th:text="${user.getUsername()}"/> </td>
+      <td> <span th:text="${user.getPassword()}"/> </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<form th:if="${admin}" th:action="@{/admin/}">
+  <input type="submit" value="Go to admin home page">
+</form>
+
+
+<form th:action="@{/logout}">
+  <input type="submit" value="Log out">
+</form>
+
+
+
+</body>
+</html>
